@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('../../admin/css/admin.css'); /* keep admin utilities if needed */
+
+/* ==========================================================
+   module/teacher/css/teacher.css
+   Clean, modern stylesheet for teacher module.
+   - Variables for easy theming
+   - Sections: Reset / Vars / Layout / Topbar / Sidebar / Content / Components / Utilities
+   - Sidebar: red background, black text by default, white hover background, solid red active
+   ========================================================== */
+
+:root{
+    /* Brand colors */
+    --brand-green: #198754;        /* used for topbar accents, headers */
+    --brand-green-dark: #14532d;
+    --brand-red: #b80000;          /* sidebar active / main red */
+    --brand-red-dark: #9f0000;
+    --bg-page: #ffffff;
+    --muted: #6b756d;
+    --text-default: #0f172a;      /* dark text for body */
+    --card-shadow: 0 8px 28px rgba(16,24,40,0.06);
+    --radius-lg: 12px;
+}
+
+/* --------------------- Base / Reset --------------------- */
+html,body{height:100%;}
+body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; color:var(--text-default); background:var(--bg-page);}
+a{color:inherit}
+img{max-width:100%;height:auto}
+
+/* -------------------- Layout / Containers -------------------- */
+.main-content{
+    background:var(--bg-page);
+    color:var(--text-default);
+    min-height:100vh;
+    padding:80px 18px 40px; /* space for topbar */
+    transition:margin-left .22s ease;
+}
+.container-center{max-width:1150px;margin:0 auto;width:100%}
+
+/* Top of page blocks */
+.page-header{
+    width:100%;padding:1.2rem 1.25rem;background:var(--bg-page);border-radius:var(--radius-lg);box-shadow:var(--card-shadow);margin-bottom:1.25rem;
+}
+.page-title{font-size:2.2rem;margin:0;color:var(--brand-green);font-weight:800}
+.page-subtitle{color:var(--brand-green-dark);margin-top:0.35rem;font-weight:500}
+
+/* -------------------- Topbar (green with black text) -------------------- */
+.topbar{position:fixed;left:0;right:0;top:0;height:64px;background:linear-gradient(90deg,var(--brand-green),var(--brand-green-dark));color:#000;display:flex;align-items:center;z-index:1200;padding:0 18px;box-shadow:0 2px 8px rgba(16,24,40,0.04)}
+.topbar .brand{font-weight:800;color:#000;margin-right:12px}
+.topbar .topbar-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+
+/* -------------------- Sidebar (red) -------------------- */
+.sidebar{
+    width:250px;height:100vh;position:fixed;top:0;left:0;caret-color:#000;background:linear-gradient(180deg,var(--brand-red),var(--brand-red-dark));color:#000;padding-top:72px;box-shadow:6px 0 28px rgba(16,24,40,0.06);z-index:1100;overflow-y:auto;transition:width .22s ease,left .22s ease,transform .18s ease;
+}
+.sidebar-header{padding:14px 16px;display:flex;align-items:center;gap:8px;justify-content:center}
+.sidebar-school{font-size:1.05rem;font-weight:800;color:#000}
+
+/* menu list */
+.sidebar-menu{list-style:none;padding:8px 6px;margin:0}
+.sidebar-menu .menu-item{margin:6px 6px}
+.sidebar-menu .menu-link{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;color:#000;text-decoration:none;transition:all .16s ease, transform .16s ease;position:relative;font-weight:700}
+.sidebar-menu .menu-link i{width:30px;text-align:center;font-size:16px;color:#000}
+
+/* default: black text on red background (the link inherits the red sidebar) */
+.sidebar .menu-link{background:transparent}
+
+/* Hover — white background, black text (per your request) */
+.sidebar .menu-link:hover{background:#ffffff;color:#000;transform:translateX(4px)}
+.sidebar .menu-link:hover i{color:#000}
+
+/* Active — full-row solid red with strong weight and subtle shadow */
+.sidebar .menu-link.active{background:var(--brand-red);color:#000;font-weight:800;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+.sidebar .menu-link.active i{color:#000}
+
+/* remove bullets and ensure consistent spacing */
+.sidebar-menu, .sidebar-menu li{list-style:none !important;padding-left:0 !important;margin:0 !important}
+
+/* Scrollbar styling */
+.sidebar::-webkit-scrollbar{width:8px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.12);border-radius:8px}
+
+/* Mobile behaviour */
+@media (max-width:992px){
+    .sidebar{left:-280px}
+    .sidebar.open{left:0}
+    .main-content{margin-left:0 !important}
+}
+
+/* -------------------- Collapsed Sidebar -------------------- */
+.sidebar.collapsed{width:72px}
+.sidebar.collapsed .sidebar-header{display:none}
+.sidebar.collapsed .sidebar-school{display:none}
+.sidebar.collapsed .menu-link{justify-content:center;padding:10px 6px;border-radius:8px}
+.sidebar.collapsed .menu-link span{display:none}
+.sidebar.collapsed .menu-link i{margin:0}
+
+/* when collapsed we apply a body class so pages can react */
+body.sidebar-collapsed .main-content{margin-left:96px !important}
+
+/* main content offset when sidebar present */
+@media(min-width:993px){
+    .main-content{margin-left:270px}
+    body.sidebar-collapsed .main-content{margin-left:96px}
+}
+
+/* -------------------- Cards, Stat & Quick components -------------------- */
+.dashboard-grid{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:flex-start}
+.stat-card{flex:1 1 240px;max-width:320px;min-width:220px;background:var(--bg-page);border-radius:10px;padding:0.9rem 1rem;box-shadow:0 6px 18px rgba(15,23,42,0.04);display:flex;flex-direction:column;justify-content:space-between}
+.stat-card .stat-card-title{font-size:1rem;color:var(--brand-green);font-weight:700}
+.stat-card .stat-card-value{font-size:1.8rem;font-weight:800;color:var(--brand-green-dark);margin:6px 0 8px}
+.stat-card:hover{transform:translateY(-6px);box-shadow:0 18px 46px rgba(16,24,40,0.12)}
+
+.quick-cards{display:flex;gap:1rem;flex-wrap:wrap}
+.quick-card{display:flex;align-items:center;gap:0.9rem;background:var(--bg-page);padding:0.8rem 1rem;border-radius:12px;box-shadow:0 8px 28px rgba(16,24,40,0.04);text-decoration:none;color:inherit;min-width:220px}
+.qc-icon{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.qc-title{font-weight:800;color:var(--brand-green-dark)}
+.qc-copy{color:rgba(15,23,42,0.6)}
+
+/* Buttons */
+.action-btn{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;color:#fff;font-weight:700;text-decoration:none;border:2px solid rgba(0,0,0,0.06)}
+.btn-edit{background:linear-gradient(90deg,#34d399,#10b981)}
+.btn-delete{background:linear-gradient(90deg,#ef4444,#b91c1c)}
+.btn-manage{background:linear-gradient(90deg,var(--brand-green),#36b37a)}
+.modern-btn{background:linear-gradient(90deg,var(--brand-green),#36b37a);color:#fff;border:none;padding:8px 14px;border-radius:999px;font-weight:700}
+.modern-btn.danger{background:linear-gradient(90deg,#ef4444,#b91c1c)}
+
+/* Tables */
+.modern-table{width:100% !important;border-collapse:collapse;margin-top:0.6rem;background:transparent;border-radius:6px;overflow:hidden}
+.modern-table thead th{background:linear-gradient(180deg,#f7fbf8,#f0faf6);padding:0.6rem 0.8rem;text-align:left;font-weight:700;color:var(--brand-green-dark);border-bottom:2px solid rgba(15,23,42,0.06)}
+.modern-table tbody td{padding:0.55rem 0.8rem;font-size:0.98rem;color:var(--brand-green-dark);border-bottom:1px solid rgba(15,23,42,0.04)}
+.modern-table tr:nth-child(even) td{background:rgba(15,23,42,0.02)}
+.modern-table tr:hover td{background:rgba(25,135,84,0.03)}
+
+/* Forms */
+.form-section{background:var(--bg-page);border-radius:10px;box-shadow:0 4px 18px rgba(15,23,42,0.04);padding:1.2rem 1.4rem;max-width:720px;margin:1.2rem auto}
+.form-section label{display:block;margin-bottom:0.5rem;font-weight:600;color:var(--brand-green-dark)}
+.form-section input,.form-section select,.form-section textarea{width:100%;padding:0.75rem 1rem;border:1px solid #e6eef0;border-radius:6px;margin-bottom:1rem;background:#fbfeff}
+.form-section input:focus,.form-section select:focus,.form-section textarea:focus{border-color:#4e54c8;outline:none}
+.form-section button,.form-section input[type="submit"]{background:var(--brand-green);color:#000;border:none;border-radius:6px;padding:0.75rem 1.2rem;font-weight:700;cursor:pointer}
+.form-section button:hover{filter:brightness(.95)}
+
+/* Utilities */
+.muted{color:var(--muted)}
+.empty-muted{color:rgba(15,23,42,0.45);font-style:italic}
+
+/* Responsive adjustments */
+@media (max-width:992px){
+    .main-content{padding:72px 12px}
+    .dashboard-grid{flex-direction:column}
+    .quick-card{width:100%}
+    .main-content{margin-left:0}
+}
+
+/* small accessibility helpers */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* End of teacher.css */
+
+.form-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 8px 24px rgba(15,23,42,0.04);
+    border: 1px solid rgba(15,23,42,0.03);
+    margin-bottom: 1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 300px;
+    gap: 1rem;
+    align-items: center;
+}
+.form-grid .full-row { grid-column: 1 / -1; }
+
+.modern-input {
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid #e6eef0;
+    background: #ffffff;
+    color: #163225;
+    transition: box-shadow .12s, border-color .12s;
+}
+.modern-input:focus { box-shadow: 0 6px 18px rgba(25,135,84,0.06); border-color: #198754; outline: none; }
+
+/* Better form styles */
+.form-card label, .form-card .form-label { display:block; font-weight:600; color:#14532d; margin-bottom:0.35rem; }
+.form-card .help { display:block; font-size:0.9rem; color:rgba(15,23,42,0.55); margin-top:0.25rem }
+.form-grid > div { display:flex; flex-direction:column; }
+.form-grid .full-row { padding-top:0.5rem }
+
+input[type="file"] { cursor:pointer; }
+
+.upload-btn { border-radius:10px; padding:0.6rem 0.95rem; border:2px solid #198754; background:#fff; color:#198754; font-weight:700 }
+.upload-btn i { margin-right:6px }
+
+.form-actions { display:flex; gap:0.6rem; justify-content:flex-end; align-items:center }
+.form-actions .modern-btn, .form-actions .upload-btn { box-shadow: none }
+
+/* Make form controls consistent across pages */
+select.modern-input, textarea.modern-input, input.modern-input { min-height:42px; }
+textarea.modern-input { min-height:72px; resize:vertical }
+
+/* Responsive: tighten grid on small screens */
+@media (max-width:720px) {
+    .form-grid { grid-template-columns: 1fr !important; }
+    .form-card { padding:1rem }
+}
+
+/* File input styling - keep native but improved spacing */
+input[type="file"] {
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #e6eef0;
+    background: #ffffff;
+}
+
+.upload-actions { display:flex; justify-content:flex-end; gap:0.6rem; align-items:center; }
+.upload-btn {
+    display:inline-flex; align-items:center; gap:0.6rem; padding:0.6rem 1rem; border-radius:10px; background:#fff; border:2px solid #198754; color:#198754; font-weight:700; cursor:pointer; transition:background .12s, color .12s;
+}
+.upload-btn i { font-size:1.05rem }
+.upload-btn:hover { background: linear-gradient(90deg,#ecfdf5,#dcfce7); color:#14532d }
+
+.notes-list { margin-top:1rem; border-radius:10px; overflow:hidden; }
+.notes-list .notes-row { display:flex; gap:1rem; align-items:center; padding:0.9rem 1rem; border-bottom:1px solid rgba(15,23,42,0.03); }
+.notes-list .notes-row:last-child { border-bottom: none; }
+.notes-list .notes-meta { color: #0f5132; font-weight:600 }
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .upload-actions { justify-content:flex-start; margin-top:0.5rem }
+    .page-title { font-size:1.6rem }
+}
+
+
